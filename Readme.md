@@ -19,36 +19,38 @@ www.example.com/api/tag/标签名   使用GET获取所有拥有此tag的文章�
 数据库部分：uid, username 唯一
 任务要求使用boltDB，只有键值对没有那些花里胡哨的，所以不得不更改结构，但思路还是按照邓设计的表
 
-user.db 
-	usernameBucket
-		k: uid v: username
++ user.db 
+  + usernameBucket
+    		+ k: uid v: username
 
-article.db
-	uidBucket
-		k: articleid v: uid   
-	titleBucket
-		k: articleid v: title
-	bodyBucket
-		k: articleid v: body
++ article.db
 
-tag.db
-	tagnameBucket
-		k: tagid v: tagname
+  + uidBucket
+    + k: articleid v: uid   
+  + titleBucket
+    + k: articleid v: title
 
-review.db
-	messageBucket
-		k: reviewid v: message
+  + bodyBucket
+    + k: articleid v: body
 
-articleTag.db
-	articleidBucket
-		k: atId v: articleid
-	tagidBucket
-		k: atId v: tagid
++ tag.db
+  + tagnameBucket
+    + k: tagid v: tagname
 
-articleReview.db
-	articleidBucket
-		k: arId v: articleid
-	reviewidBucket
-		k: arId v: reviewid
++ review.db
+  + messageBucket
+    + k: reviewid v: message
+
++ articleTag.db
+  + articleidBucket
+    + k: atId v : articleid
+  + tagidBucket
+    		+ k: atId v: tagid
+
++ articleReview.db
+  + articleidBucket
+    + k: arId v: articleid
+  + reviewidBucket
+    		+ k: arId v: reviewid
 
 (另，data.md是初步测试的结果)
