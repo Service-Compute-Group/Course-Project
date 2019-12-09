@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/articleview.css">
+        <script src="https://vuejs.org/js/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <title>{{title}} - 博客</title>
+            <h1>{{title}}</h1>
+            <div class="userview" onclick='seeAuthor()'>{{author}}</div>
+            <div class="tagview">
+                标签：
+                <tagItem
+                    v-for="item in tags"
+                    v-bind:tag="item"
+                    v-bind:key="item.id"
+                >
+                </tagItem>
+            </div>
+            <div class="contentview">{{content}}</div>
+            <div class="reviewview">
+                <h2>评论</h2>
+                <reviewItem
+                    v-for="item in reviews"
+                    v-bind:review="item"
+                    v-bind:key="item.id">
+                </reviewItem>
+            </div>
+        </div>
+
+        <script src="/static/articleview.js"></script>
+    </body>
+</html>
