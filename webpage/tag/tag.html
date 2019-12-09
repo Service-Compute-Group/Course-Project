@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+        <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                var vm = new Vue({
+                    el:'#register',
+                    data:{
+                        msg:'Hello World!',
+                    },
+                    methods:{
+                        // 页面加载时，需要获取所有的tag
+                        getAllTag: function() {
+                            this.$http.get("/api/tag").then(function(res) {
+                                var ret = res.bodyText;
+                                while (ret.indexOf("\n") != -1) {
+                                    var ij = ret.indexOf("\n") + 1;
+                                    var tagname = ret.substr(0, ij)
+                                    ret = ret.substr(ij)
+                                    addedArticle = "<span onclick=getArticleByTag('this.innerHTML')>" + obj.tagname + "</span>";
+                                    document.getElementById("tags").innerHTML 
+                                        = document.getElementById("tags").innerHTML + addedArticle;
+                                }
+                            },
+                            function() {
+                                console.log('请求失败处理');
+                                document.getElementById("sign").innerHTML = "Error: failed to register!";
+                            });
+                        }, 
+                        // 获取指定tag的文章列表
+                        getArticleByTag: function(tagname) {
+                            this.$http.get("/tag/" + tagname).then(function(res) {
+                                var ret = res.bodyText;
+                                while (ret.indexOf("\n") != -1) {
+                                    var ij = ret.indexOf("}\n") + 1;
+                                    var tagname = ret.substr(0, ij)
+                                    ret = ret.substr(ij)
+                                    var obj = JSON.parse(ret)
+                                    addedArticle = "<li><a href='http://localhost:9090/article/" + obj.article_id + "'>" + obj.article_title + "</a></li>";
+                                    document.getElementById("articles").innerHTML 
+                                        = document.getElementById("articles").innerHTML + addedArticle;
+                                }
+                            },
+                            function() {
+                                console.log('请求失败处理');
+                                document.getElementById("sign").innerHTML = "Error: failed to register!";
+                            });
+                        }
+                    }
+                });
+                vm.getAllTag();
+                function getArticleByTag(tagname) {
+                    vm.getArticleByTag(tagname);
+                }
+            };
+        </script>
+
+        <style type="text/css">
+            body{
+                text-align: left
+            }
+            span{
+                margin: 10px 10px 10px 10px;
+            }
+            li {
+                margin-top: 20px
+            }
+        </style>
+    </head>
+    
+    <body>
+        <p>按标签筛选</p>
+        <div id="tags">
+        </div>
+        <br/>
+        <br/>
+        <p>文章列表</p>
+        <ul id="articles">
+            
+        </ul>
+    </body>
+</html>

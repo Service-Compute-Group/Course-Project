@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-->当浏览器访问/users/{username}时，读取此文件，替换用户名后返回即可<-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+        <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+        <script type="text/javascript">
+            var vm;
+            window.onload = function() {
+                var cnt = 0;
+                vm = new Vue({
+                    el:'#articles',
+                    data:{
+                        msg:'Hello World!',
+                    },
+                    methods: {
+                        getAllArticles: function() {
+                            username = document.getElementById("username").innerHTML;
+                            my_query = '/user/' + username;
+                            console.log(my_query)
+                            this.$http.get(
+                                my_query
+                            ).then(function(res) {
+                                // 服务器应该返回多个json，每个代表一个文章。每个文章有如下内容：Id、Title, Author, Tag(或TagID), Content
+                                var ret = res.bodyText;
+                                console.log(res.bodyText)
+                                while (ret.indexOf("}\n") != -1) {
+                                    var ij = ret.indexOf("}\n") + 1;
+                                    var temp = ret.substr(0, ij)
+                                    ret = ret.substr(ij)
+                                    var obj = JSON.parse(temp);
+                                    // 此处应该点击跳转，暂未完成
+                                    addedArticle = "<li onclick='getArticle(" + obj.Id.charCodeAt(0) + ")'>" + obj.Title + "</li>";
+                                    document.getElementById("articles").innerHTML 
+                                        = document.getElementById("articles").innerHTML + addedArticle;
+                                }
+                            },
+                            function() {
+                                console.log('请求失败处理');
+                                document.getElementById("sign").innerHTML = "Error: failed to get all articles!";
+                            });
+                        }, 
+                    }
+                });
+                vm.getAllArticles();
+            };
+        </script>
+
+        <style type="text/css">
+            
+        </style>
+    </head>
+    
+    <body>
+        <h1>博客主页</h1>
+        <div id="func">
+            <!-->服务器获取页面时，应替换用户名为真正的用户名<-->
+            <p>#name</p>
+            <ul id="articles">
+            </ul>
+        </div>
+    </body>
+</html>
