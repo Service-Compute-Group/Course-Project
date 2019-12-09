@@ -1,0 +1,68 @@
+h1 {
+    text-align: center;
+}
+
+.userview {
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tagview {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.tagitem {
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    display: inline;
+    border-style: solid;
+    border-color: black;
+    border-width: 1.5pt;
+    padding: 0.2em 1em 0.2em 1em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    border-radius: 1.5em;
+}
+
+.contentview {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+
+    padding-left: 2em;
+    padding-right: 2em;
+
+    line-height: 1.2em;
+
+}
+
+.reviewview {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+}
+
+h2 {
+    margin-left: 1em;
+}
+
+.reviewitem {
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding: 0.5em 0.7em 0.5em 0.7em;
+    line-height: 1.2em;
+
+    border-style: solid;
+    border-color: gray;
+    border-width: 1pt;
+}
