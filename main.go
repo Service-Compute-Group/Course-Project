@@ -9,7 +9,7 @@ func generateDBInfo() {
 
 	// 生成user.db 和相关数据
 
-	db, _ := bolt.Open("user.db", 0666, nil)
+	db, _ := bolt.Open("db/user.db", 0666, nil)
 	db.Update(func(tx *bolt.Tx) error {
 		b, _ := tx.CreateBucket([]byte("usernameBucket"))
 		b.Put([]byte("uid1"), []byte("un1"))
@@ -20,7 +20,7 @@ func generateDBInfo() {
 	})
 
 	// 生成article.db和相关数据
-	db, _ = bolt.Open("article.db", 0666, nil)
+	db, _ = bolt.Open("db/article.db", 0666, nil)
 	db.Update(func(tx *bolt.Tx) error {
 		b, _ := tx.CreateBucket([]byte("uidBucket"))
 		b.Put([]byte("articleid1"), []byte("uid1"))
@@ -47,7 +47,7 @@ func generateDBInfo() {
 	})
 
 	// 生成tag.db和相关数据
-	db, _ = bolt.Open("tag.db", 0666, nil)
+	db, _ = bolt.Open("db/tag.db", 0666, nil)
 	db.Update(func(tx *bolt.Tx) error {
 		b, _ := tx.CreateBucket([]byte("tagnameBucket"))
 		b.Put([]byte("tagid1"), []byte("tagname1"))
@@ -58,7 +58,7 @@ func generateDBInfo() {
 	})
 
 	// 生成review.db和相关数据
-	db, _ = bolt.Open("review.db", 0666, nil)
+	db, _ = bolt.Open("db/review.db", 0666, nil)
 	db.Update(func(tx *bolt.Tx) error {
 		b, _ := tx.CreateBucket([]byte("messageBucket"))
 		b.Put([]byte("reviewid1"), []byte("message1"))
@@ -69,7 +69,7 @@ func generateDBInfo() {
 	})
 
 	// 生成articleTag.db和相关数据
-	db, _ = bolt.Open("articleTag.db", 0666, nil)
+	db, _ = bolt.Open("db/articleTag.db", 0666, nil)
 	db.Update(func(tx *bolt.Tx) error {
 		b, _ := tx.CreateBucket([]byte("articleidBucket"))
 		b.Put([]byte("atId1"), []byte("articleid1"))
@@ -88,7 +88,7 @@ func generateDBInfo() {
 	})
 
 	// 生成articleReview.db和相关数据
-	db, _ = bolt.Open("articleReview.db", 0666, nil)
+	db, _ = bolt.Open("db/articleReview.db", 0666, nil)
 	db.Update(func(tx *bolt.Tx) error {
 		b, _ := tx.CreateBucket([]byte("articleidBucket"))
 		b.Put([]byte("arId1"), []byte("articleid1"))
