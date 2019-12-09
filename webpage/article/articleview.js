@@ -40,8 +40,7 @@ function load(id) {
             alert("发生内部错误")
         }
     })
-    //xhr.open("GET", "/api/article/" + articleid)
-    xhr.open("GET", "http://rest.apizza.net/mock/51c1b2b3f6568f3bda100dc161396207/api/article/" + id)
+    xhr.open("GET", "/api/article/" + articleid)
     xhr.send()
 } 
 
@@ -68,8 +67,7 @@ var articleid = get_article_id(window.location.href)
 
 window.onload = function() {
     // console.log(articleid)
-    // this.load(articleid)
-    this.load("1")
+    this.load(articleid)
 }
 
 function seeAuthor() {
