@@ -22,9 +22,12 @@ type ArticleListResp struct {
 	Title     string `json:"title"`
 }
 
-func GetArticleList(username string) []ArticleListResp {
+func GetArticleList(username string) ([]ArticleListResp, bool) {
 
 	uid := getUidWithUsername(username)
+	if uid == "" {
+		return []ArticleListResp{}, false
+	}
 
 	var opt []ArticleListResp
 	articleDB.View(func(tx *bolt.Tx) error {
@@ -48,7 +51,7 @@ func GetArticleList(username string) []ArticleListResp {
 		}
 		return nil
 	})
-	return opt
+	return opt, true
 }
 
 func GetAllArticles() []ArticleListResp {
@@ -77,11 +80,16 @@ type ConcreteInfo struct {
 	Review []string `json:"review"`
 }
 
-func GetConcreteInfo(articleID string) ConcreteInfo {
+func GetConcreteInfo(articleID string) (ConcreteInfo, bool) {
 	opt := ConcreteInfo{}
+	ok := true
 	articleDB.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte("titleBucket"))
 		opt.Title = string(b.Get([]byte(articleID)))
+		if opt.Title == "" {
+			ok = false
+			return nil
+		}
 		b = tx.Bucket([]byte("bodyBucket"))
 		opt.Body = string(b.Get([]byte(articleID)))
 		b = tx.Bucket([]byte("uidBucket"))
@@ -93,9 +101,12 @@ func GetConcreteInfo(articleID string) ConcreteInfo {
 		})
 		return nil
 	})
+	if !ok {
+		return ConcreteInfo{}, false
+	}
 	opt.Tag = getTagsWithArticleID(articleID)
 	opt.Review = getMessageWithArticleID(articleID)
-	return opt
+	return opt, true
 }
 
 func getTagsWithArticleID(articleID string) []string {
@@ -162,9 +173,9 @@ func GetAllTags() []string {
 	return opt
 }
 
-func GetArticleListWithTag(tagname string) []ArticleListResp {
+func GetArticleListWithTag(tagname string) ([]ArticleListResp, bool) {
 	tagID := getTagIDWithTagname(tagname)
-
+	ok := false
 	var opt []ArticleListResp
 	articleTagDB.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte("tagidBucket"))
@@ -173,6 +184,7 @@ func GetArticleListWithTag(tagname string) []ArticleListResp {
 		for k, v := c.First(); k != nil; k, v = c.Next() {
 			// 找到属于该tag的article id
 			if string(v) == tagID {
+				ok = true
 				var tmp ArticleListResp
 				// 根据atId 获取article id
 				articleTagDB.View(func(tx *bolt.Tx) error {
@@ -191,7 +203,10 @@ func GetArticleListWithTag(tagname string) []ArticleListResp {
 		}
 		return nil
 	})
-	return opt
+	if !ok {
+		return []ArticleListResp{}, false
+	}
+	return opt, true
 }
 
 func getUidWithUsername(username string) string {

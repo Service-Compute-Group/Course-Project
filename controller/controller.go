@@ -30,10 +30,16 @@ func GetUserList(c *gin.Context) {
 
 func GetArticleWithUser(c *gin.Context) {
 	username := c.Param("user")
-	articleList := model.GetArticleList(username)
-	c.JSON(200, gin.H{
-		"data": articleList,
-	})
+	articleList, userExist := model.GetArticleList(username)
+	if !userExist {
+		c.JSON(404, gin.H{
+			"data": "user not exist",
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"data": articleList,
+		})
+	}
 }
 
 func GetAllArticles(c *gin.Context) {
@@ -45,10 +51,16 @@ func GetAllArticles(c *gin.Context) {
 
 func GetArticleWithArticleID(c *gin.Context) {
 	articleID := c.Param("articleID")
-	concreteArticle := model.GetConcreteInfo(articleID)
-	c.JSON(200, gin.H{
-		"data": concreteArticle,
-	})
+	concreteArticle, articleExist := model.GetConcreteInfo(articleID)
+	if !articleExist {
+		c.JSON(404, gin.H{
+			"data": "article not exist",
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"data": concreteArticle,
+		})
+	}
 }
 
 func GetAllTags(c *gin.Context) {
@@ -60,8 +72,14 @@ func GetAllTags(c *gin.Context) {
 
 func GetArticlesWithTag(c *gin.Context) {
 	tag := c.Param("tag")
-	articleList := model.GetArticleListWithTag(tag)
-	c.JSON(200, gin.H{
-		"data": articleList,
-	})
+	articleList, tagExist := model.GetArticleListWithTag(tag)
+	if !tagExist {
+		c.JSON(404, gin.H{
+			"data": "tag not exist",
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"data": articleList,
+		})
+	}
 }
