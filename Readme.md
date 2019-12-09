@@ -21,15 +21,13 @@ www.example.com/api/tag/标签名   使用GET获取所有拥有此tag的文章�
 
 + user.db 
   + usernameBucket
-    		+ k: uid v: username
+    + k: uid v: username
 
 + article.db
-
   + uidBucket
     + k: articleid v: uid   
   + titleBucket
     + k: articleid v: title
-
   + bodyBucket
     + k: articleid v: body
 
@@ -45,12 +43,12 @@ www.example.com/api/tag/标签名   使用GET获取所有拥有此tag的文章�
   + articleidBucket
     + k: atId v : articleid
   + tagidBucket
-    		+ k: atId v: tagid
+    + k: atId v: tagid
 
 + articleReview.db
   + articleidBucket
     + k: arId v: articleid
   + reviewidBucket
-    		+ k: arId v: reviewid
+    + k: arId v: reviewid
 
 (另，data.md是初步测试的结果)
