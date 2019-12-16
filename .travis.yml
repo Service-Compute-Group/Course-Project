@@ -1,2 +1,7 @@
 language: go
-script: go test -v ./main.go
+script: 
+go test -v ./main.go
+go test -v ./controller/controller.go
+go test -v ./router/router.go
+go test -v ./model/init.go
+go test -v ./model/model.go
