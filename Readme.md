@@ -1,5 +1,7 @@
 
 # API 规范
+[![Build Status](https://travis-ci.org/michaelliao/openweixin.svg?branch=master)](https://travis-ci.org/michaelliao/openweixin)
+
 API的输入输出使用JSON格式，应用REST风格。
 
 操作成功时候默认返回HTTP200状态。
